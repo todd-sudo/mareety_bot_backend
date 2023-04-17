@@ -1,0 +1,7 @@
+# PostgreSQL
+# ------------------------------------------------------------------------------
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=mareety_bot_backend
+POSTGRES_USER=VGtvclaGEnTDueGgGkYFvSAmirUkLrJa
+POSTGRES_PASSWORD=94VAc0IhNppN6ihzM2eaoYJWLpFfPeOik3nrkiVLpNsYcSOYhTIhbmD44738zYnX
