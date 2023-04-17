@@ -94,6 +94,7 @@ def build_users_to_file_task(self):
     for c in customers:
         obj = c.__dict__
         obj.pop("_state")
+        obj.pop("tg_user_id")
         objects.append(obj)
     save_to_xlsx_list(
         objects, "Users", f"mareety_users.xlsx", ""
