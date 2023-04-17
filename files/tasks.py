@@ -91,11 +91,20 @@ def save_to_xlsx_list(
 def build_users_to_file_task(self):
     customers = Customer.objects.all()
     objects = []
+    count = 1
     for c in customers:
-        obj = c.__dict__
-        obj.pop("_state")
-        obj.pop("tg_user_id")
+        obj = {
+            "№": count,
+            "id": c.pk,
+            "Имя": c.first_name,
+            "Фамилия": c.last_name,
+            "Номер телефона": c.phone,
+            "Адрес": c.address,
+            "Создан": c.create_at,
+            "Язык": c.lang,
+        }
         objects.append(obj)
+        count += 1
     save_to_xlsx_list(
         objects, "Users", f"mareety_users.xlsx", ""
     )
