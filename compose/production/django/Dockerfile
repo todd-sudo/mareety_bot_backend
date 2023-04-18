@@ -1,7 +1,8 @@
+ARG PYTHON_VERSION=3.10-slim-bullseye
 
 
 # define an alias for the specfic python version used in this file.
-FROM python:3.10.10-slim-bullseye as python
+FROM python:${PYTHON_VERSION} as python
 
 # Python build stage
 FROM python as python-build-stage
@@ -17,8 +18,6 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 
 # Requirements are installed here to ensure they will be cached.
 COPY ./requirements .
-
-RUN pip install --upgrade pip
 
 # Create Python Dependency and Sub-Dependency Wheels.
 RUN pip wheel --wheel-dir /usr/src/app/wheels  \
@@ -55,8 +54,6 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 # copy python dependency wheels from python-build-stage
 COPY --from=python-build-stage /usr/src/app/wheels  /wheels/
 
-RUN pip install --upgrade pip
-
 # use wheels to install python dependencies
 RUN pip install --no-cache-dir --no-index --find-links=/wheels/ /wheels/* \
   && rm -rf /wheels/
@@ -70,6 +67,13 @@ RUN chmod +x /entrypoint
 COPY --chown=django:django ./compose/production/django/start /start
 RUN sed -i 's/\r$//g' /start
 RUN chmod +x /start
+
+
+COPY --chown=django:django ./compose/production/django/start_grpc /start_grpc
+RUN sed -i 's/\r$//g' /start_grpc
+RUN chmod +x /start_grpc
+
+
 COPY --chown=django:django ./compose/production/django/celery/worker/start /start-celeryworker
 RUN sed -i 's/\r$//g' /start-celeryworker
 RUN chmod +x /start-celeryworker
