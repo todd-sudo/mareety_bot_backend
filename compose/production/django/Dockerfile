@@ -69,11 +69,6 @@ RUN sed -i 's/\r$//g' /start
 RUN chmod +x /start
 
 
-COPY --chown=django:django ./compose/production/django/start_grpc /start_grpc
-RUN sed -i 's/\r$//g' /start_grpc
-RUN chmod +x /start_grpc
-
-
 COPY --chown=django:django ./compose/production/django/celery/worker/start /start-celeryworker
 RUN sed -i 's/\r$//g' /start-celeryworker
 RUN chmod +x /start-celeryworker
