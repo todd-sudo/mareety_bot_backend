@@ -52,7 +52,7 @@ class ParserMareety:
                 for p in price_list:
                     price += p
 
-        image_url = soup.find("img", attrs={"width": "800", "height": "800"})
+        image_url = soup.find("img", attrs={"class": "wp-post-image"})
         if image_url:
             image_url = image_url.get("src")
 
